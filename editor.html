@@ -1,0 +1,92 @@
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Card Editor</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+</head>
+
+<body>
+    <p class="center" ><strong>Info Area</strong></p>
+    Text 1: <input id = "text1" type="text" name="FirstName" value="Mickey"><br>
+    <input id="image" type="file" name="pic" accept="image/*" onchange="readURL(this)"><br>
+    <input type="button" onclick="renderInfo()" value = "Render Card"><br>
+    <div id="cardContent" class="center">
+        <canvas id = "cardMainCanvas" class = "border">
+        </canvas>
+    </div>
+</body>
+
+</html>
+<style>
+.center{
+    margin: auto;
+    width: 500px;
+    height: 800px
+    align-self: center;
+    /*border: solid green;*/
+    padding: 10px;
+}
+
+.border{
+    border: solid red
+}
+</style>
+
+<script>
+
+var canvas = document.getElementById('cardMainCanvas');
+var divHeight = document.getElementById('cardContent').clientHeight;
+var divWidth = document.getElementById('cardContent').clientWidth;
+canvas.height = divHeight*4;
+canvas.width = divWidth;
+var ctx = canvas.getContext("2d");
+var reader;
+// renderInfo();
+initializeCanvas()
+// initializeCanvas(ctx,canvas.width,canvas.height)
+console.log(canvas);
+// renderInfo()
+
+function initializeCanvas(){
+    // ctx.drawImage(base_image,0,0,canvas.width,canvas.height);
+    console.log(canvas)
+    ctx.fillStyle = "blue"
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+
+    ctx.fillStyle = "white";
+    ctx.font = "20px Georgia";
+    ctx.fillText("Text 1", 420, 50);
+
+}
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    reader = new FileReader();
+    reader.readAsDataURL(input.files[0]);
+    return reader;
+  }
+}
+
+function renderInfo(){
+    var image = document.getElementById("image")
+    console.log(image)
+    base_image = new Image();
+    console.log(reader)
+    base_image.src = reader.result;
+    console.log(base_image);
+
+    base_image.onload = function(){
+        ctx.drawImage(base_image,0,0,canvas.width,canvas.height);
+
+        ctx.fillStyle = "Blue";
+        ctx.font = "15px Georgia";
+        text1 = document.getElementById('text1').value
+        ctx.fillText(text1, 450, 60);
+    }
+}
+
+</script>
